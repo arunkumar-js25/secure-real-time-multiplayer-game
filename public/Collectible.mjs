@@ -1,6 +1,6 @@
 class Collectible {
   constructor({x, y, value, id}) {
-
+  
   }
 
 }
