@@ -1,6 +1,6 @@
 import { canvasCalcs } from './canvas-data.mjs';
 
-lass Player {
+class Player {
   constructor({ x = 10, y = 10, w = 30, h = 30, score = 0, main, id }) {
     this.x = x;
     this.y = y;
@@ -65,4 +65,3 @@ lass Player {
 }
 
 export default Player;
-

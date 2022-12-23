@@ -5,7 +5,7 @@ import { generateStartPos, canvasCalcs } from './canvas-data.mjs';
 
 const socket = io();
 const canvas = document.getElementById('game-window');
-const context = canvas.getContext('2d');
+const context = canvas.getContext('2d', { alpha: false });
 
 // Preload game assets
 const loadImage = src => {
@@ -14,6 +14,7 @@ const loadImage = src => {
   return img;
 }
 
+const init = () => {
 const bronzeCoinArt = loadImage('https://cdn.freecodecamp.org/demo-projects/images/bronze-coin.png');
 const silverCoinArt = loadImage('https://cdn.freecodecamp.org/demo-projects/images/silver-coin.png');
 const goldCoinArt = loadImage('https://cdn.freecodecamp.org/demo-projects/images/gold-coin.png');
@@ -24,7 +25,7 @@ let tick;
 let currPlayers = [];
 let item;
 let endGame;
-console.log("entered");
+
 socket.on('init', ({ id, players, coin }) => {
   console.log(`Connected ${id}`);
 
@@ -97,8 +98,10 @@ socket.on('init', ({ id, players, coin }) => {
   currPlayers = players.map(val => new Player(val)).concat(mainPlayer);
   item = new Collectible(coin);
 
-  draw();
+  //draw();
 });
+window.requestAnimationFrame(draw); 
+}
 
 const draw = () => {
   context.clearRect(0, 0, canvas.width, canvas.height);
@@ -142,3 +145,6 @@ const draw = () => {
 
   if (!endGame) tick = requestAnimationFrame(draw);
 }
+
+init();
+//socket.emit('init',{req.ip,currPlayers,10});
