@@ -85,7 +85,7 @@ socket.on('init', ({ id, players, coin }) => {
   });
 
   // Handle endGame state
-  socket.on('end-game', result => endGame = result);
+  socket.on('end-game', result => endGame = result); 
 
   // Update scoring player's score
   socket.on('update-player', playerObj => {
@@ -115,7 +115,7 @@ const draw = () => {
   context.strokeRect(canvasCalcs.playFieldMinX, canvasCalcs.playFieldMinY, canvasCalcs.playFieldWidth, canvasCalcs.playFieldHeight);
 
   // Controls text
-  context.fillStyle = 'white';
+  context.fillStyle = 'white'; 
   context.font = `13px 'Press Start 2P'`;
   context.textAlign = 'center';
   context.fillText('Controls: WASD', 100, 32.5);
