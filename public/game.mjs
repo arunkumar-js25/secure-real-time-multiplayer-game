@@ -5,7 +5,7 @@ import { generateStartPos, canvasCalcs } from './canvas-data.mjs';
 
 const socket = io();
 const canvas = document.getElementById('game-window');
-const context = canvas.getContext('2d', { alpha: false });
+const context = canvas.getContext('2d', { alpha: false });  
 
 // Preload game assets
 const loadImage = src => {
