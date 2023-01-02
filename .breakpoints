@@ -1,3 +1,12 @@
 {
-  "files": {}
+  "files": {
+    "public/game.mjs": [
+      {
+        "id": "0c717f3b-62b3-4bc2-bb54-59d052d890bc",
+        "line": 29,
+        "version": 504,
+        "index": 1030
+      }
+    ]
+  }
 }

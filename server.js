@@ -1,7 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
-const expect = require('chai');
+const expect = require('chai'); 
 const socket = require('socket.io');
 const cors = require('cors');
 
@@ -17,17 +17,17 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 //For FCC testing purposes and enables user to connect from outside the hosting platform
-app.use(cors({origin: '*'})); 
+app.use(cors({ origin: '*' }));
 
 // Index page (static HTML)
 app.route('/')
-  .get(function (req, res) {
+  .get(function(req, res) {
     res.sendFile(process.cwd() + '/views/index.html');
-  }); 
+  });
 
 //For FCC testing purposes
 fccTestingRoutes(app);
-    
+
 // 404 Not Found Middleware
 app.use(function(req, res, next) {
   res.status(404)
@@ -40,9 +40,9 @@ const portNum = process.env.PORT || 3000;
 // Set up server and tests
 const server = app.listen(portNum, () => {
   console.log(`Listening on port ${portNum}`);
-  if (process.env.NODE_ENV==='test') {
+  if (process.env.NODE_ENV === 'test') {
     console.log('Running Tests...');
-    setTimeout(function () {
+    setTimeout(function() {
       try {
         runner.run();
       } catch (error) {
@@ -52,5 +52,22 @@ const server = app.listen(portNum, () => {
     }, 1500);
   }
 });
+
+const io = socket(server);
+io.on('connection', socket => {
+  console.log(`connect ${socket.id}`);
+  socket.emit('init', { id: socket.id, players: [], coin: 10 });
+  socket.on('disconnect', reason => {
+    console.log(`disconnect ${socket.id} due to ${reason}`);
+  });
+});
+
+
+/*let io = socket(server);
+io.on('connection', (s) => {
+  console.log("start");
+  s.emit('init', { id: "A", players: curr, currPlayers: coin: 10 });
+});*/
+
 
 module.exports = app; // For testing

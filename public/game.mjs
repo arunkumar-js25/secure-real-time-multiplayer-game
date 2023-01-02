@@ -5,7 +5,7 @@ import { generateStartPos, canvasCalcs } from './canvas-data.mjs';
 
 const socket = io();
 const canvas = document.getElementById('game-window');
-const context = canvas.getContext('2d', { alpha: false });  
+const context = canvas.getContext('2d');  
 
 // Preload game assets
 const loadImage = src => {
@@ -14,7 +14,6 @@ const loadImage = src => {
   return img;
 }
 
-const init = () => {
 const bronzeCoinArt = loadImage('https://cdn.freecodecamp.org/demo-projects/images/bronze-coin.png');
 const silverCoinArt = loadImage('https://cdn.freecodecamp.org/demo-projects/images/silver-coin.png');
 const goldCoinArt = loadImage('https://cdn.freecodecamp.org/demo-projects/images/gold-coin.png');
@@ -32,8 +31,8 @@ socket.on('init', ({ id, players, coin }) => {
   // Cancel animation if one already exists and
   // the page isn't refreshed, like if the server
   // restarts
-  cancelAnimationFrame(tick);
-
+  //cancelAnimationFrame(tick);
+  console.log("test");
   // Create our player when we log on
   const mainPlayer = new Player({ 
     x: generateStartPos(canvasCalcs.playFieldMinX, canvasCalcs.playFieldMaxX, 5),
@@ -98,10 +97,9 @@ socket.on('init', ({ id, players, coin }) => {
   currPlayers = players.map(val => new Player(val)).concat(mainPlayer);
   item = new Collectible(coin);
 
-  //draw();
+  draw();
 });
-window.requestAnimationFrame(draw); 
-}
+
 
 const draw = () => {
   context.clearRect(0, 0, canvas.width, canvas.height);
@@ -116,12 +114,12 @@ const draw = () => {
 
   // Controls text
   context.fillStyle = 'white'; 
-  context.font = `13px 'Press Start 2P'`;
+  context.font = "13px 'Press Start 2P'";
   context.textAlign = 'center';
   context.fillText('Controls: WASD', 100, 32.5);
 
   // Game title
-  context.font = `16px 'Press Start 2P'`;
+  context.font = "16px 'Press Start 2P'";
   context.fillText('Coin Race', canvasCalcs.canvasWidth / 2, 32.5);
 
   // Calculate score and draw players each frame
@@ -139,12 +137,10 @@ const draw = () => {
 
   if (endGame) {
     context.fillStyle = 'white';
-    context.font = `13px 'Press Start 2P'`
-    context.fillText(`You ${endGame}! Restart and try again.`, canvasCalcs.canvasWidth / 2, 80);
+    context.font = "13px 'Press Start 2P'";
+    context.fillText("You ${endGame}! Restart and try again.", canvasCalcs.canvasWidth / 2, 80);
   }
 
   if (!endGame) tick = requestAnimationFrame(draw);
 }
 
-init();
-//socket.emit('init',{req.ip,currPlayers,10});
